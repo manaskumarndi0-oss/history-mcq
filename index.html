@@ -3,56 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History Chronology MCQ - 163 Questions (v1.3)</title>
+    <title>History MCQ Pro v1.4</title>
     <style>
+        :root {
+            --bg-body: #f0f4f8;
+            --bg-container: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px rgba(0,0,0,0.1);
+            --option-bg: #f8fafc;
+            --option-hover: #f1f5f9;
+            --option-border: #e2e8f0;
+            --correct-bg: #dcfce7;
+            --wrong-bg: #fee2e2;
+            --progress-bg: #e9eef2;
+            --btn-primary: #3b82f6;
+            --btn-primary-hover: #2563eb;
+            --btn-success: #22c55e;
+            --score-bg: #1e293b;
+        }
+        body.dark-mode {
+            --bg-body: #0f172a;
+            --bg-container: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #475569;
+            --shadow: 0 10px 25px rgba(0,0,0,0.5);
+            --option-bg: #334155;
+            --option-hover: #475569;
+            --option-border: #64748b;
+            --correct-bg: #14532d;
+            --wrong-bg: #7f1d1d;
+            --progress-bg: #334155;
+            --btn-primary: #60a5fa;
+            --btn-primary-hover: #3b82f6;
+            --btn-success: #4ade80;
+            --score-bg: #0f172a;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f0f4f8;
+            background: var(--bg-body);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 16px;
             margin: 0;
+            transition: background 0.3s, color 0.3s;
         }
         .container {
-            max-width: 700px;
+            max-width: 720px;
             width: 100%;
-            background: white;
+            background: var(--bg-container);
             padding: 25px 20px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 1px solid #e9eef2;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: background 0.3s, border 0.3s;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
         h1 {
-            font-size: 24px;
-            color: #1e293b;
-            border-bottom: 3px solid #3b82f6;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            font-size: 22px;
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--btn-primary);
+            padding-bottom: 5px;
+            display: inline-block;
+            margin: 0;
+        }
+        .dark-toggle {
+            background: var(--option-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text-primary);
+            transition: 0.2s;
+        }
+        .dark-toggle:hover { background: var(--option-hover); }
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: var(--progress-bg);
+            border-radius: 10px;
+            margin: 10px 0 20px 0;
+            overflow: hidden;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--btn-primary);
+            transition: width 0.4s ease;
+            border-radius: 10px;
         }
         .status-bar {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
-            background: #f8fafc;
+            align-items: center;
+            background: var(--option-bg);
             padding: 10px 15px;
             border-radius: 12px;
             margin-bottom: 20px;
             font-weight: 600;
-            color: #334155;
-            border: 1px solid #e2e8f0;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            gap: 10px;
         }
+        .timer-box {
+            font-size: 18px;
+            color: var(--text-primary);
+            background: var(--bg-container);
+            padding: 2px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+        .timer-box.warning { color: #ef4444; border-color: #ef4444; }
         #question {
             font-size: 20px;
             font-weight: 500;
-            color: #0f172a;
+            color: var(--text-primary);
             margin-bottom: 20px;
             line-height: 1.5;
-            padding: 5px 0;
         }
         .option-group {
             display: flex;
@@ -64,22 +143,22 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            background: #f8fafc;
+            background: var(--option-bg);
             padding: 14px 18px;
             border-radius: 14px;
-            border: 2px solid #e2e8f0;
+            border: 2px solid var(--option-border);
             transition: 0.15s ease;
             cursor: pointer;
         }
-        .option-item:hover { background: #f1f5f9; border-color: #94a3b8; }
-        .option-item.selected { border-color: #3b82f6; background: #eff6ff; }
-        .option-item.correct { border-color: #22c55e; background: #dcfce7; }
-        .option-item.wrong { border-color: #ef4444; background: #fee2e2; }
+        .option-item:hover { background: var(--option-hover); border-color: #94a3b8; }
+        .option-item.selected { border-color: var(--btn-primary); background: #eff6ff; }
+        .option-item.correct { border-color: #22c55e; background: var(--correct-bg); }
+        .option-item.wrong { border-color: #ef4444; background: var(--wrong-bg); }
         .option-item input[type="radio"] {
-            width: 18px; height: 18px; accent-color: #3b82f6;
+            width: 18px; height: 18px; accent-color: var(--btn-primary);
             margin: 0; flex-shrink: 0; cursor: pointer;
         }
-        .option-item label { font-size: 16px; color: #1e293b; cursor: pointer; flex: 1; }
+        .option-item label { font-size: 16px; color: var(--text-primary); cursor: pointer; flex: 1; }
         .btn-group {
             display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px;
         }
@@ -88,37 +167,50 @@
             font-size: 16px; font-weight: 600; cursor: pointer;
             transition: 0.2s; flex: 1 1 auto;
         }
-        .btn-primary { background: #3b82f6; color: white; }
-        .btn-primary:hover { background: #2563eb; }
+        .btn-primary { background: var(--btn-primary); color: white; }
+        .btn-primary:hover { background: var(--btn-primary-hover); }
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-        .btn-success { background: #22c55e; color: white; }
+        .btn-success { background: var(--btn-success); color: white; }
         .btn-success:hover { background: #16a34a; }
         .feedback {
             margin: 15px 0 10px; padding: 12px 18px; border-radius: 12px;
             font-weight: 500; display: none; border-left: 5px solid;
         }
         .feedback.show { display: block; }
-        .feedback.correct { background: #dcfce7; border-color: #22c55e; color: #166534; }
-        .feedback.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+        .feedback.correct { background: var(--correct-bg); border-color: #22c55e; color: #166534; }
+        .feedback.wrong { background: var(--wrong-bg); border-color: #ef4444; color: #991b1b; }
         .score-box {
-            margin-top: 20px; padding: 15px; background: #1e293b;
+            margin-top: 20px; padding: 15px; background: var(--score-bg);
             color: white; border-radius: 16px; text-align: center;
-            font-size: 18px; font-weight: 600;
+            font-size: 18px; font-weight: 600; display: flex;
+            justify-content: space-around; flex-wrap: wrap; gap: 10px;
         }
         .score-box span { color: #facc15; }
+        .score-detail {
+            display: flex; gap: 20px; justify-content: center;
+            font-weight: 400; font-size: 16px;
+        }
+        .score-detail .correct { color: #4ade80; }
+        .score-detail .wrong { color: #f87171; }
         @media (max-width: 480px) {
             .container { padding: 15px; }
-            h1 { font-size: 20px; }
+            h1 { font-size: 18px; }
             #question { font-size: 17px; }
             .option-item { padding: 12px 14px; }
+            .status-bar { font-size: 14px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📜 Full Chronology MCQ (163)</h1>
+        <div class="header">
+            <h1>📜 History MCQ Pro</h1>
+            <button class="dark-toggle" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+        </div>
+        <div class="progress-container"><div id="progress-bar"></div></div>
         <div class="status-bar">
-            <span id="question-counter">Question 1/163</span>
+            <span id="question-counter">Question 1/0</span>
+            <span class="timer-box" id="timer-display">⏱️ 20s</span>
             <span>✅ <span id="score-counter">0</span></span>
         </div>
         <div id="question"></div>
@@ -129,101 +221,105 @@
             <button id="next-btn" class="btn btn-success" style="display:none;">Next ➡</button>
         </div>
         <div class="score-box">
-            🏆 Score: <span id="final-score">0</span> / <span id="total-questions">163</span>
+            <div>🏆 Score: <span id="final-score">0</span> / <span id="total-questions">0</span></div>
+            <div class="score-detail">
+                <span class="correct">✅ Correct: <span id="correct-count">0</span></span>
+                <span class="wrong">❌ Wrong: <span id="wrong-count">0</span></span>
+            </div>
         </div>
     </div>
-
     <script>
+        // =======================================================
+        // 🔽🔽🔽 यहाँ 163 सवाल (v1.3 तक के) पहले से मौजूद हैं 🔽🔽🔽
+        // =======================================================
         const questions = [
-            // ====== PART 1 (Q1 to Q42) - Event to Year ======
             { q: 'In which year was the Partition of Bengal announced?', options: ['1904', '1905', '1906', '1907'], ans: 1 },
             { q: 'When was the Muslim League founded at Dacca?', options: ['1905', '1906', '1907', '1908'], ans: 1 },
             { q: 'When was Khudiram Bose executed?', options: ['1907', '1908', '1909', '1910'], ans: 1 },
             { q: 'When was Tilak sentenced to 6 years on sedition charges?', options: ['1907', '1908', '1909', '1910'], ans: 1 },
-            { q: 'In which year were the Minto-Morley Reforms (Indian Councils Act) passed?', options: ['1908', '1909', '1910', '1911'], ans: 1 },
-            { q: 'In which year was the Partition of Bengal cancelled at the Delhi Durbar?', options: ['1910', '1911', '1912', '1913'], ans: 1 },
-            { q: 'When did Delhi officially become the new capital of India?', options: ['1911', '1912', '1913', '1914'], ans: 1 },
-            { q: 'When was the bomb thrown on Lord Hardinge during his state entry into Delhi?', options: ['23 Dec 1911', '23 Dec 1912', '23 Dec 1913', '23 Dec 1914'], ans: 1 },
-            { q: 'When was the Ghadar Party formed at San Francisco?', options: ['1 Nov 1913', '1 Nov 1914', '1 Nov 1915', '1 Nov 1916'], ans: 1 },
+            { q: 'In which year were the Minto-Morley Reforms passed?', options: ['1908', '1909', '1910', '1911'], ans: 1 },
+            { q: 'In which year was the Partition of Bengal cancelled?', options: ['1910', '1911', '1912', '1913'], ans: 1 },
+            { q: 'When did Delhi become the new capital of India?', options: ['1911', '1912', '1913', '1914'], ans: 1 },
+            { q: 'When was the bomb thrown on Lord Hardinge?', options: ['23 Dec 1911', '23 Dec 1912', '23 Dec 1913', '23 Dec 1914'], ans: 1 },
+            { q: 'When was the Ghadar Party formed?', options: ['1 Nov 1913', '1 Nov 1914', '1 Nov 1915', '1 Nov 1916'], ans: 1 },
             { q: 'When did World War I begin?', options: ['4 Aug 1913', '4 Aug 1914', '4 Aug 1915', '4 Aug 1916'], ans: 1 },
-            { q: 'When did the Komagata Maru ship reach Budge Budge (Calcutta)?', options: ['29 Sep 1913', '29 Sep 1914', '29 Sep 1915', '29 Sep 1916'], ans: 1 },
-            { q: 'When did Gandhiji arrive in India from South Africa?', options: ['9 Jan 1914', '9 Jan 1915', '9 Jan 1916', '9 Jan 1917'], ans: 1 },
+            { q: 'When did Komagata Maru reach Budge Budge?', options: ['29 Sep 1913', '29 Sep 1914', '29 Sep 1915', '29 Sep 1916'], ans: 1 },
+            { q: 'When did Gandhiji arrive in India?', options: ['9 Jan 1914', '9 Jan 1915', '9 Jan 1916', '9 Jan 1917'], ans: 1 },
             { q: 'When did Gopal Krishna Gokhale die?', options: ['19 Feb 1914', '19 Feb 1915', '19 Feb 1916', '19 Feb 1917'], ans: 1 },
-            { q: 'When did B.G. Tilak found the Indian Home Rule League (Poona)?', options: ['28 Apr 1915', '28 Apr 1916', '28 Apr 1917', '28 Apr 1918'], ans: 1 },
-            { q: 'When did Annie Besant start another Home Rule League?', options: ['25 Sep 1915', '25 Sep 1916', '25 Sep 1917', '25 Sep 1918'], ans: 1 },
-            { q: 'When did Mahatma Gandhi launch the Champaran campaign?', options: ['Apr 1916', 'Apr 1917', 'Apr 1918', 'Apr 1919'], ans: 1 },
-            { q: 'When did Montague declare the goal of Responsible Government in India?', options: ['20 Aug 1916', '20 Aug 1917', '20 Aug 1918', '20 Aug 1919'], ans: 1 },
-            { q: 'In which year did the trade union movement begin in India?', options: ['1916', '1917', '1918', '1919'], ans: 2 },
-            { q: 'When did the Rowlatt (Sedition) Committee submit its report?', options: ['Apr 1917', 'Apr 1918', 'Apr 1919', 'Apr 1920'], ans: 1 },
-            { q: 'When did the Jallianwala Bagh tragedy occur?', options: ['13 Apr 1918', '13 Apr 1919', '13 Apr 1920', '13 Apr 1921'], ans: 1 },
-            { q: 'When did the House of Commons pass the Montague-Chelmsford Reforms?', options: ['5 Dec 1918', '5 Dec 1919', '5 Dec 1920', '5 Dec 1921'], ans: 1 },
-            { q: 'When did the INC adopt the Non-Cooperation resolution?', options: ['Dec 1919', 'Dec 1920', 'Dec 1921', 'Dec 1922'], ans: 1 },
-            { q: 'When did the Chauri Chaura violent incident take place?', options: ['5 Feb 1921', '5 Feb 1922', '5 Feb 1923', '5 Feb 1924'], ans: 1 },
-            { q: 'When did the Moplah Rebellion occur on the Malabar coast?', options: ['Aug 1921', 'Aug 1922', 'Aug 1923', 'Aug 1924'], ans: 1 },
-            { q: 'When was the Swarajist Party formed by Motilal Nehru?', options: ['1 Jan 1922', '1 Jan 1923', '1 Jan 1924', '1 Jan 1925'], ans: 1 },
-            { q: 'In which year did the Communist Party of India start activities at Kanpur?', options: ['1923', '1924', '1925', '1926'], ans: 1 },
-            { q: 'When did the Kakori Train Conspiracy case take place?', options: ['Aug 1924', 'Aug 1925', 'Aug 1926', 'Aug 1927'], ans: 1 },
-            { q: 'When was the appointment of the Simon Commission announced?', options: ['8 Nov 1926', '8 Nov 1927', '8 Nov 1928', '8 Nov 1929'], ans: 1 },
-            { q: 'When did the Simon Commission arrive in Bombay (all-India hartal)?', options: ['3 Feb 1927', '3 Feb 1928', '3 Feb 1929', '3 Feb 1930'], ans: 1 },
-            { q: 'In which year was the Nehru Report published?', options: ['1927', '1928', '1929', '1930'], ans: 1 },
-            { q: 'In which year did Lala Lajpat Rai die (after police assault)?', options: ['1927', '1928', '1929', '1930'], ans: 1 },
-            { q: 'In which year was the Sarda Act passed?', options: ['1927', '1928', '1929', '1930'], ans: 2 },
-            { q: 'When did Jinnah formulate the "Fourteen Points"?', options: ['9 Mar 1928', '9 Mar 1929', '9 Mar 1930', '9 Mar 1931'], ans: 1 },
-            { q: 'When did Bhagat Singh and Batukeshwar Dutt throw a bomb in the Assembly?', options: ['6 Apr 1928', '6 Apr 1929', '6 Apr 1930', '6 Apr 1931'], ans: 1 },
-            { q: 'When did Lord Irwin announce Dominion Status as the goal?', options: ['31 Oct 1928', '31 Oct 1929', '31 Oct 1930', '31 Oct 1931'], ans: 1 },
-            { q: 'When did the Lahore session of INC adopt "Poorna Swaraj"?', options: ['31 Dec 1928', '31 Dec 1929', '31 Dec 1930', '31 Dec 1931'], ans: 1 },
-            { q: 'When was the first Independence Day observed?', options: ['26 Jan 1929', '26 Jan 1930', '26 Jan 1931', '26 Jan 1932'], ans: 1 },
-            { q: 'When did the Working Committee pass the Civil Disobedience resolution?', options: ['14 Feb 1929', '14 Feb 1930', '14 Feb 1931', '14 Feb 1932'], ans: 1 },
-            { q: 'When did Mahatma Gandhi start the Dandi March?', options: ['12 Mar 1930', '6 Apr 1930', '5 Mar 1931', '26 Jan 1930'], ans: 0 },
-            { q: 'When did the First Round Table Conference begin?', options: ['30 Nov 1929', '30 Nov 1930', '30 Nov 1931', '30 Nov 1932'], ans: 1 },
-            { q: 'When was the Gandhi-Irwin Pact signed?', options: ['5 Mar 1930', '5 Mar 1931', '5 Mar 1932', '5 Mar 1933'], ans: 1 },
-            { q: 'When were Bhagat Singh, Sukhdev, and Rajguru executed?', options: ['28 Mar 1930', '28 Mar 1931', '28 Mar 1932', '28 Mar 1933'], ans: 1 },
-            // ====== Q43 to Q84 (Event to Year) ======
-            { q: 'When did the Second Round Table Conference take place?', options: ['7 Sep 1930', '7 Sep 1931', '7 Sep 1932', '7 Sep 1933'], ans: 1 },
-            { q: 'When did Gandhi return from London and launch Civil Disobedience again?', options: ['28 Dec 1930', '28 Dec 1931', '28 Dec 1932', '28 Dec 1933'], ans: 1 },
+            { q: 'When did B.G. Tilak found Home Rule League (Poona)?', options: ['28 Apr 1915', '28 Apr 1916', '28 Apr 1917', '28 Apr 1918'], ans: 1 },
+            { q: 'When did Annie Besant start Home Rule League?', options: ['25 Sep 1915', '25 Sep 1916', '25 Sep 1917', '25 Sep 1918'], ans: 1 },
+            { q: 'When did Gandhi launch Champaran campaign?', options: ['Apr 1916', 'Apr 1917', 'Apr 1918', 'Apr 1919'], ans: 1 },
+            { q: 'When did Montague declare Responsible Government?', options: ['20 Aug 1916', '20 Aug 1917', '20 Aug 1918', '20 Aug 1919'], ans: 1 },
+            { q: 'In which year did trade union movement begin?', options: ['1916', '1917', '1918', '1919'], ans: 2 },
+            { q: 'When did Rowlatt Committee submit report?', options: ['Apr 1917', 'Apr 1918', 'Apr 1919', 'Apr 1920'], ans: 1 },
+            { q: 'When did Jallianwala Bagh tragedy occur?', options: ['13 Apr 1918', '13 Apr 1919', '13 Apr 1920', '13 Apr 1921'], ans: 1 },
+            { q: 'When did House of Commons pass Montague-Chelmsford Reforms?', options: ['5 Dec 1918', '5 Dec 1919', '5 Dec 1920', '5 Dec 1921'], ans: 1 },
+            { q: 'When did INC adopt Non-Cooperation resolution?', options: ['Dec 1919', 'Dec 1920', 'Dec 1921', 'Dec 1922'], ans: 1 },
+            { q: 'When did Chauri Chaura incident occur?', options: ['5 Feb 1921', '5 Feb 1922', '5 Feb 1923', '5 Feb 1924'], ans: 1 },
+            { q: 'When did Moplah Rebellion occur?', options: ['Aug 1921', 'Aug 1922', 'Aug 1923', 'Aug 1924'], ans: 1 },
+            { q: 'When was Swarajist Party formed?', options: ['1 Jan 1922', '1 Jan 1923', '1 Jan 1924', '1 Jan 1925'], ans: 1 },
+            { q: 'In which year did CPI start at Kanpur?', options: ['1923', '1924', '1925', '1926'], ans: 1 },
+            { q: 'When did Kakori Conspiracy occur?', options: ['Aug 1924', 'Aug 1925', 'Aug 1926', 'Aug 1927'], ans: 1 },
+            { q: 'When was Simon Commission announced?', options: ['8 Nov 1926', '8 Nov 1927', '8 Nov 1928', '8 Nov 1929'], ans: 1 },
+            { q: 'When did Simon Commission arrive in Bombay?', options: ['3 Feb 1927', '3 Feb 1928', '3 Feb 1929', '3 Feb 1930'], ans: 1 },
+            { q: 'In which year was Nehru Report published?', options: ['1927', '1928', '1929', '1930'], ans: 1 },
+            { q: 'In which year did Lala Lajpat Rai die?', options: ['1927', '1928', '1929', '1930'], ans: 1 },
+            { q: 'In which year was Sarda Act passed?', options: ['1927', '1928', '1929', '1930'], ans: 2 },
+            { q: 'When did Jinnah formulate Fourteen Points?', options: ['9 Mar 1928', '9 Mar 1929', '9 Mar 1930', '9 Mar 1931'], ans: 1 },
+            { q: 'When did Bhagat Singh throw bomb in Assembly?', options: ['6 Apr 1928', '6 Apr 1929', '6 Apr 1930', '6 Apr 1931'], ans: 1 },
+            { q: 'When did Irwin announce Dominion Status?', options: ['31 Oct 1928', '31 Oct 1929', '31 Oct 1930', '31 Oct 1931'], ans: 1 },
+            { q: 'When did Lahore session adopt Poorna Swaraj?', options: ['31 Dec 1928', '31 Dec 1929', '31 Dec 1930', '31 Dec 1931'], ans: 1 },
+            { q: 'When was first Independence Day observed?', options: ['26 Jan 1929', '26 Jan 1930', '26 Jan 1931', '26 Jan 1932'], ans: 1 },
+            { q: 'When did Working Committee pass Civil Disobedience resolution?', options: ['14 Feb 1929', '14 Feb 1930', '14 Feb 1931', '14 Feb 1932'], ans: 1 },
+            { q: 'When did Gandhi start Dandi March?', options: ['12 Mar 1930', '6 Apr 1930', '5 Mar 1931', '26 Jan 1930'], ans: 0 },
+            { q: 'When did First Round Table Conference begin?', options: ['30 Nov 1929', '30 Nov 1930', '30 Nov 1931', '30 Nov 1932'], ans: 1 },
+            { q: 'When was Gandhi-Irwin Pact signed?', options: ['5 Mar 1930', '5 Mar 1931', '5 Mar 1932', '5 Mar 1933'], ans: 1 },
+            { q: 'When were Bhagat Singh, Sukhdev, Rajguru executed?', options: ['28 Mar 1930', '28 Mar 1931', '28 Mar 1932', '28 Mar 1933'], ans: 1 },
+            { q: 'When did Second Round Table Conference take place?', options: ['7 Sep 1930', '7 Sep 1931', '7 Sep 1932', '7 Sep 1933'], ans: 1 },
+            { q: 'When did Gandhi return from London and relaunch CD?', options: ['28 Dec 1930', '28 Dec 1931', '28 Dec 1932', '28 Dec 1933'], ans: 1 },
             { q: 'When was Gandhi arrested without trial (Jan)?', options: ['4 Jan 1931', '4 Jan 1932', '4 Jan 1933', '4 Jan 1934'], ans: 1 },
-            { q: 'When was the "Communal Award" announced by Ramsay Macdonald?', options: ['16 Aug 1931', '16 Aug 1932', '16 Aug 1933', '16 Aug 1934'], ans: 1 },
-            { q: 'When did Gandhiji begin his "fast unto death" against the Communal Award?', options: ['20 Sep 1931', '20 Sep 1932', '20 Sep 1933', '20 Sep 1934'], ans: 1 },
-            { q: 'When was the Poona Pact signed (fast ended)?', options: ['26 Sep 1931', '26 Sep 1932', '26 Sep 1933', '26 Sep 1934'], ans: 1 },
-            { q: 'When did the Third Round Table Conference begin?', options: ['17 Nov 1931', '17 Nov 1932', '17 Nov 1933', '17 Nov 1934'], ans: 1 },
-            { q: 'When was Gandhiji released from prison (May)?', options: ['9 May 1932', '9 May 1933', '9 May 1934', '9 May 1935'], ans: 1 },
-            { q: 'In which year did Gandhi withdraw from active politics (constructive programmes)?', options: ['1933', '1934', '1935', '1936'], ans: 1 },
-            { q: 'When was the Government of India Act 1935 passed?', options: ['4 Aug 1934', '4 Aug 1935', '4 Aug 1936', '4 Aug 1937'], ans: 1 },
-            { q: 'In which year were elections held under the Act of 1935?', options: ['1936', '1937', '1938', '1939'], ans: 1 },
-            { q: 'In which year did Congress form ministries in several provinces?', options: ['Jul 1936', 'Jul 1937', 'Jul 1938', 'Jul 1939'], ans: 1 },
-            { q: 'When was the Haripura session where Subhash Bose was elected Congress president?', options: ['19-20 Feb 1937', '19-20 Feb 1938', '19-20 Feb 1939', '19-20 Feb 1940'], ans: 1 },
-            { q: 'When was the Tripuri session where Subhash Bose resigned as president?', options: ['10-12 Mar 1938', '10-12 Mar 1939', '10-12 Mar 1940', '10-12 Mar 1941'], ans: 1 },
-            { q: 'When did the Congress ministries resign in protest against the war policy?', options: ['20 Oct - 5 Nov 1938', '20 Oct - 5 Nov 1939', '20 Oct - 5 Nov 1940', '20 Oct - 5 Nov 1941'], ans: 1 },
-            { q: 'When did the Muslim League observe "Deliverance Day"?', options: ['22 Dec 1938', '22 Dec 1939', '22 Dec 1940', '22 Dec 1941'], ans: 1 },
-            { q: 'When was the Pakistan Resolution passed at the Lahore session?', options: ['Mar 1939', 'Mar 1940', 'Mar 1941', 'Mar 1942'], ans: 1 },
-            { q: 'When was the "August Offer" announced by Viceroy Linlithgow?', options: ['10 Aug 1939', '10 Aug 1940', '10 Aug 1941', '10 Aug 1942'], ans: 1 },
-            { q: 'When did the Congress Working Committee reject the August Offer?', options: ['18-22 Aug 1939', '18-22 Aug 1940', '18-22 Aug 1941', '18-22 Aug 1942'], ans: 1 },
+            { q: 'When was Communal Award announced?', options: ['16 Aug 1931', '16 Aug 1932', '16 Aug 1933', '16 Aug 1934'], ans: 1 },
+            { q: 'When did Gandhi begin fast unto death against Communal Award?', options: ['20 Sep 1931', '20 Sep 1932', '20 Sep 1933', '20 Sep 1934'], ans: 1 },
+            { q: 'When was Poona Pact signed?', options: ['26 Sep 1931', '26 Sep 1932', '26 Sep 1933', '26 Sep 1934'], ans: 1 },
+            { q: 'When did Third Round Table Conference begin?', options: ['17 Nov 1931', '17 Nov 1932', '17 Nov 1933', '17 Nov 1934'], ans: 1 },
+            { q: 'When was Gandhi released from prison (May)?', options: ['9 May 1932', '9 May 1933', '9 May 1934', '9 May 1935'], ans: 1 },
+            { q: 'In which year did Gandhi withdraw from active politics?', options: ['1933', '1934', '1935', '1936'], ans: 1 },
+            { q: 'When was Government of India Act 1935 passed?', options: ['4 Aug 1934', '4 Aug 1935', '4 Aug 1936', '4 Aug 1937'], ans: 1 },
+            { q: 'In which year were elections held under Act of 1935?', options: ['1936', '1937', '1938', '1939'], ans: 1 },
+            { q: 'In which year did Congress form ministries?', options: ['Jul 1936', 'Jul 1937', 'Jul 1938', 'Jul 1939'], ans: 1 },
+            { q: 'When was Haripura session (Bose elected president)?', options: ['19-20 Feb 1937', '19-20 Feb 1938', '19-20 Feb 1939', '19-20 Feb 1940'], ans: 1 },
+            { q: 'When was Tripuri session (Bose resigned)?', options: ['10-12 Mar 1938', '10-12 Mar 1939', '10-12 Mar 1940', '10-12 Mar 1941'], ans: 1 },
+            { q: 'When did Congress ministries resign?', options: ['20 Oct - 5 Nov 1938', '20 Oct - 5 Nov 1939', '20 Oct - 5 Nov 1940', '20 Oct - 5 Nov 1941'], ans: 1 },
+            { q: 'When did Muslim League observe Deliverance Day?', options: ['22 Dec 1938', '22 Dec 1939', '22 Dec 1940', '22 Dec 1941'], ans: 1 },
+            { q: 'When was Pakistan Resolution passed?', options: ['Mar 1939', 'Mar 1940', 'Mar 1941', 'Mar 1942'], ans: 1 },
+            { q: 'When was August Offer announced?', options: ['10 Aug 1939', '10 Aug 1940', '10 Aug 1941', '10 Aug 1942'], ans: 1 },
+            { q: 'When did Congress Working Committee reject August Offer?', options: ['18-22 Aug 1939', '18-22 Aug 1940', '18-22 Aug 1941', '18-22 Aug 1942'], ans: 1 },
             { q: 'When did Congress launch Individual Satyagraha?', options: ['17 Oct 1939', '17 Oct 1940', '17 Oct 1941', '17 Oct 1942'], ans: 1 },
-            { q: 'When did Subhash Chandra Bose escape from India (to Berlin)?', options: ['17 Jan 1940', '17 Jan 1941', '17 Jan 1942', '17 Jan 1943'], ans: 1 },
-            { q: 'When did Churchill announce the Cripps Mission?', options: ['11 Mar 1940', '11 Mar 1941', '11 Mar 1942', '11 Mar 1943'], ans: 2 },
-            { q: 'When did the INC adopt the "Quit India" resolution at Bombay?', options: ['7-8 Aug 1941', '7-8 Aug 1942', '7-8 Aug 1943', '7-8 Aug 1944'], ans: 1 },
-            { q: 'When were Gandhiji and other Congress leaders arrested (Quit India)?', options: ['9 Aug 1941', '9 Aug 1942', '9 Aug 1943', '9 Aug 1944'], ans: 1 },
-            { q: 'When was the Quit India movement (Great August Uprising) launched?', options: ['11 Aug 1941', '11 Aug 1942', '11 Aug 1943', '11 Aug 1944'], ans: 1 },
-            { q: 'When did Subhash Bose establish the Indian National Army (Azad Hind Fauj)?', options: ['1 Sep 1941', '1 Sep 1942', '1 Sep 1943', '1 Sep 1944'], ans: 1 },
-            { q: 'When did Subhash Bose proclaim the Provisional Government of Free India?', options: ['21 Oct 1942', '21 Oct 1943', '21 Oct 1944', '21 Oct 1945'], ans: 1 },
-            { q: 'When did the Karachi session of Muslim League adopt "Divide and Conquer"?', options: ['Dec 1942', 'Dec 1943', 'Dec 1944', 'Dec 1945'], ans: 1 },
-            { q: 'When did Wavell call the Simla Conference?', options: ['25 Jan 1943', '25 Jan 1944', '25 Jan 1945', '25 Jan 1946'], ans: 1 },
-            { q: 'When did the mutiny of the Indian naval ratings take place in Bombay?', options: ['18 Feb 1945', '18 Feb 1946', '18 Feb 1947', '18 Feb 1948'], ans: 1 },
-            { q: 'When did PM Attlee announce the Cabinet Mission?', options: ['15 Mar 1945', '15 Mar 1946', '15 Mar 1947', '15 Mar 1948'], ans: 1 },
-            { q: 'When did the Cabinet Mission issue its proposal (May 16)?', options: ['1945', '1946', '1947', '1948'], ans: 1 },
-            { q: 'When did Jawaharlal Nehru take over as Congress president?', options: ['6 Jul 1945', '6 Jul 1946', '6 Jul 1947', '6 Jul 1948'], ans: 1 },
-            { q: 'When did Wavell invite Nehru to form the Interim Government?', options: ['6 Aug 1945', '6 Aug 1946', '6 Aug 1947', '6 Aug 1948'], ans: 1 },
-            { q: 'When did the Interim Government take office?', options: ['2 Sep 1945', '2 Sep 1946', '2 Sep 1947', '2 Sep 1948'], ans: 1 },
-            { q: 'When did the first session of the Constituent Assembly start (Muslim League boycotted)?', options: ['9 Dec 1945', '9 Dec 1946', '9 Dec 1947', '9 Dec 1948'], ans: 1 },
-            { q: 'When did PM Attlee declare that Britain would leave India by June 1948?', options: ['20 Feb 1946', '20 Feb 1947', '20 Feb 1948', '20 Feb 1949'], ans: 1 },
-            { q: 'When did Lord Mountbatten become the last British Viceroy of India?', options: ['24 Mar 1946', '24 Mar 1947', '24 Mar 1948', '24 Mar 1949'], ans: 1 },
-            { q: 'When was the Mountbatten Plan for partition announced?', options: ['3 Jun 1946', '3 Jun 1947', '3 Jun 1948', '3 Jun 1949'], ans: 1 },
-            { q: 'When did India finally win independence?', options: ['14 Aug 1947', '15 Aug 1947', '26 Jan 1947', '15 Aug 1946'], ans: 1 },
-            { q: 'In which year was the Non-Cooperation Movement suspended after Chauri Chaura?', options: ['1921', '1922', '1923', '1924'], ans: 1 },
-            { q: 'In which year did World War II begin (India declared at war)?', options: ['3 Sep 1938', '3 Sep 1939', '3 Sep 1940', '3 Sep 1941'], ans: 1 },
-            // ====== Q85 to Q126 (Reverse + Chronological) ======
+            { q: 'When did Subhash Bose escape from India?', options: ['17 Jan 1940', '17 Jan 1941', '17 Jan 1942', '17 Jan 1943'], ans: 1 },
+            { q: 'When did Churchill announce Cripps Mission?', options: ['11 Mar 1940', '11 Mar 1941', '11 Mar 1942', '11 Mar 1943'], ans: 2 },
+            { q: 'When did INC adopt Quit India resolution?', options: ['7-8 Aug 1941', '7-8 Aug 1942', '7-8 Aug 1943', '7-8 Aug 1944'], ans: 1 },
+            { q: 'When were Gandhi and others arrested (Quit India)?', options: ['9 Aug 1941', '9 Aug 1942', '9 Aug 1943', '9 Aug 1944'], ans: 1 },
+            { q: 'When was Quit India movement launched?', options: ['11 Aug 1941', '11 Aug 1942', '11 Aug 1943', '11 Aug 1944'], ans: 1 },
+            { q: 'When did Bose establish INA?', options: ['1 Sep 1941', '1 Sep 1942', '1 Sep 1943', '1 Sep 1944'], ans: 1 },
+            { q: 'When did Bose proclaim Provisional Government of Free India?', options: ['21 Oct 1942', '21 Oct 1943', '21 Oct 1944', '21 Oct 1945'], ans: 1 },
+            { q: 'When did Karachi session of Muslim League adopt "Divide and Conquer"?', options: ['Dec 1942', 'Dec 1943', 'Dec 1944', 'Dec 1945'], ans: 1 },
+            { q: 'When did Wavell call Simla Conference?', options: ['25 Jan 1943', '25 Jan 1944', '25 Jan 1945', '25 Jan 1946'], ans: 1 },
+            { q: 'When did Naval Mutiny take place?', options: ['18 Feb 1945', '18 Feb 1946', '18 Feb 1947', '18 Feb 1948'], ans: 1 },
+            { q: 'When did PM Attlee announce Cabinet Mission?', options: ['15 Mar 1945', '15 Mar 1946', '15 Mar 1947', '15 Mar 1948'], ans: 1 },
+            { q: 'When did Cabinet Mission issue proposal (May 16)?', options: ['1945', '1946', '1947', '1948'], ans: 1 },
+            { q: 'When did Nehru take over as Congress president?', options: ['6 Jul 1945', '6 Jul 1946', '6 Jul 1947', '6 Jul 1948'], ans: 1 },
+            { q: 'When did Wavell invite Nehru to form Interim Government?', options: ['6 Aug 1945', '6 Aug 1946', '6 Aug 1947', '6 Aug 1948'], ans: 1 },
+            { q: 'When did Interim Government take office?', options: ['2 Sep 1945', '2 Sep 1946', '2 Sep 1947', '2 Sep 1948'], ans: 1 },
+            { q: 'When did first Constituent Assembly session start?', options: ['9 Dec 1945', '9 Dec 1946', '9 Dec 1947', '9 Dec 1948'], ans: 1 },
+            { q: 'When did Attlee declare leaving India by June 1948?', options: ['20 Feb 1946', '20 Feb 1947', '20 Feb 1948', '20 Feb 1949'], ans: 1 },
+            { q: 'When did Mountbatten become Viceroy?', options: ['24 Mar 1946', '24 Mar 1947', '24 Mar 1948', '24 Mar 1949'], ans: 1 },
+            { q: 'When was Mountbatten Plan announced?', options: ['3 Jun 1946', '3 Jun 1947', '3 Jun 1948', '3 Jun 1949'], ans: 1 },
+            { q: 'When did India gain independence?', options: ['14 Aug 1947', '15 Aug 1947', '26 Jan 1947', '15 Aug 1946'], ans: 1 },
+            { q: 'In which year was Non-Cooperation suspended?', options: ['1921', '1922', '1923', '1924'], ans: 1 },
+            { q: 'In which year did WWII begin (India declared)?', options: ['3 Sep 1938', '3 Sep 1939', '3 Sep 1940', '3 Sep 1941'], ans: 1 },
+            // Reverse: Which event happened in this year?
             { q: 'Which event happened in 1905?', options: ['Partition of Bengal announced', 'Muslim League founded', 'Khudiram Bose executed', 'Minto-Morley Reforms'], ans: 0 },
-            { q: 'Which event happened in 1906?', options: ['Partition of Bengal cancelled', 'Muslim League founded', 'Jallianwala Bagh', 'Ghadar Party formed'], ans: 1 },
+            { q: 'Which event happened in 1906?', options: ['Partition cancelled', 'Muslim League founded', 'Jallianwala Bagh', 'Ghadar Party formed'], ans: 1 },
             { q: 'Which event happened in 1908?', options: ['Tilak sentenced', 'Minto-Morley Reforms', 'Champaran campaign', 'Gandhiji returns'], ans: 0 },
             { q: 'Which event happened in 1909?', options: ['Minto-Morley Reforms', 'Partition of Bengal', 'Delhi becomes capital', 'Komagata Maru'], ans: 0 },
             { q: 'Which event happened in 1911?', options: ['Delhi becomes capital', 'Partition cancelled', 'Bomb on Hardinge', 'Ghadar Party formed'], ans: 1 },
@@ -251,68 +347,67 @@
             { q: 'Which event happened in 1943?', options: ['Provisional Govt of Free India', 'Karachi session (Divide and Conquer)', 'Both A and B', 'Naval Mutiny'], ans: 2 },
             { q: 'Which event happened in 1946?', options: ['Cabinet Mission', 'Interim Government formed', 'Both A and B', 'Mountbatten Plan'], ans: 2 },
             { q: 'Which event happened in 1947?', options: ['Mountbatten Plan', 'Independence', 'Both A and B', 'Attlee declares leaving'], ans: 2 },
-            { q: 'Which happened FIRST: Jallianwala Bagh (1919) or Dandi March (1930)?', options: ['Jallianwala Bagh', 'Dandi March', 'Both in same year', 'None of these'], ans: 0 },
-            { q: 'Which happened FIRST: Non-Cooperation (1920) or Quit India (1942)?', options: ['Non-Cooperation', 'Quit India', 'Both in same year', 'None of these'], ans: 0 },
-            { q: 'Which happened FIRST: Simon Commission (1928) or Civil Disobedience (1930)?', options: ['Simon Commission', 'Civil Disobedience', 'Both in same year', 'None of these'], ans: 0 },
-            { q: 'Which happened FIRST: Gandhi-Irwin Pact (1931) or Communal Award (1932)?', options: ['Gandhi-Irwin Pact', 'Communal Award', 'Both in same year', 'None of these'], ans: 0 },
-            { q: 'Which happened FIRST: Bose escapes (1941) or Quit India (1942)?', options: ['Bose escapes', 'Quit India', 'Both in same year', 'None of these'], ans: 0 },
-            { q: 'Which happened LAST: Jallianwala (1919) or Quit India (1942)?', options: ['Jallianwala', 'Quit India', 'Both in same year', 'None of these'], ans: 1 },
-            { q: 'Which happened LAST: Swarajist (1923) or INA (1942)?', options: ['Swarajist', 'INA', 'Both in same year', 'None of these'], ans: 1 },
-            { q: 'Which happened LAST: Nehru Report (1928) or GOI Act (1935)?', options: ['Nehru Report', 'GOI Act 1935', 'Both in same year', 'None of these'], ans: 1 },
-            { q: 'Which happened LAST: August Offer (1940) or Cabinet Mission (1946)?', options: ['August Offer', 'Cabinet Mission', 'Both in same year', 'None of these'], ans: 1 },
-            { q: 'Arrange: Chauri Chaura (1922), Dandi (1930), Quit India (1942). Which is the MIDDLE one?', options: ['Chauri Chaura', 'Dandi March', 'Quit India', 'None of these'], ans: 1 },
-            { q: 'Arrange: Gandhiji returns (1915), Tilak Home Rule (1916), Jallianwala (1919). Which is FIRST?', options: ['Gandhiji returns', 'Tilak Home Rule', 'Jallianwala', 'None of these'], ans: 0 },
-            { q: 'Which is the correct chronological sequence? (a) Partition -> Jallianwala -> Dandi -> Quit India', options: ['Partition(1905)->Jallianwala(1919)->Dandi(1930)->Quit India(1942)', 'Jallianwala->Partition->Quit India->Dandi', 'Quit India->Dandi->Jallianwala->Partition', 'None of these'], ans: 0 },
-            { q: 'Which event happened BETWEEN 1925 (Kakori) and 1930 (Dandi)?', options: ['Simon Commission (1928)', 'Sarda Act (1929)', 'Both A and B', 'None of these'], ans: 2 },
-            { q: 'Which event happened BETWEEN 1930 (Dandi) and 1935 (GOI Act)?', options: ['Gandhi-Irwin Pact (1931)', 'Communal Award (1932)', 'Both A and B', 'None of these'], ans: 2 },
-            { q: 'Which happened FIRST: Minto-Morley (1909) or Montague-Chelmsford (1919)?', options: ['Minto-Morley', 'Montague-Chelmsford', 'Both in same year', 'None of these'], ans: 0 },
-            { q: 'Which happened LAST: Cripps Mission (1942) or Mountbatten Plan (1947)?', options: ['Cripps Mission', 'Mountbatten Plan', 'Both in same year', 'None of these'], ans: 1 },
-            // ====== UPDATE 1.2: 14 Questions (Q127 to Q140) ======
-            { q: 'In which year was the Treaty of London signed (related to Belgian neutrality)?', options: ['1839', '1879', '1894', '1904'], ans: 0 },
-            { q: 'In which year was the Dual Alliance formed between Germany and Austria-Hungary?', options: ['1839', '1879', '1894', '1904'], ans: 1 },
-            { q: 'In which year was the Franco-Russian Alliance established?', options: ['1879', '1894', '1904', '1907'], ans: 1 },
-            { q: 'In which year was the Entente Cordiale signed between Britain and France?', options: ['1894', '1904', '1907', '1914'], ans: 1 },
-            { q: 'In which year was the Anglo-Russian Entente signed (forming the Triple Entente)?', options: ['1894', '1904', '1907', '1914'], ans: 2 },
-            { q: 'What was the immediate diplomatic crisis called that triggered World War I?', options: ['July Crisis', 'October Revolution', 'March Crisis', 'June Offensive'], ans: 0 },
-            { q: 'Who assassinated Archduke Franz Ferdinand and his wife Sophie?', options: ['Gavrilo Princip', 'Nedeljko Cabrinovic', 'Trifko Grabez', 'Muhamed Mehmedbasic'], ans: 0 },
-            { q: 'Which countries formed the Central Powers at the start of WWI?', options: ['Germany and Austria-Hungary', 'Britain and France', 'Germany and Italy', 'Russia and Serbia'], ans: 0 },
-            { q: 'Which countries formed the Triple Entente?', options: ['Britain, France, and Russia', 'Germany, Austria-Hungary, Italy', 'Britain, France, and Italy', 'Russia, Serbia, and Germany'], ans: 0 },
-            { q: 'Which of these was a MAJOR long-term cause of WWI (acronym MAIN)?', options: ['Militarism, Alliances, Imperialism, Nationalism', 'Monarchy, Aristocracy, Idealism, Nomads', 'Merchant, Army, Industry, Navy', 'Madness, Anger, Insanity, Negligence'], ans: 0 },
-            { q: 'The American Revolution is considered a clear example influencing which revolution?', options: ['French Revolution', 'Russian Revolution', 'Industrial Revolution', 'Green Revolution'], ans: 0 },
-            { q: 'Which effect of the French Revolution involved the confiscation/configuration of church property?', options: ['Configuration of church property', 'Beheading of the king', 'Annihilation of the nobility', 'Installation of revolutionary regime'], ans: 0 },
-            { q: 'As per the new page, on which exact date did Delhi become the new capital of India?', options: ['23 Dec 1911', '23 Dec 1912', '1 Nov 1912', '1 Nov 1914'], ans: 1 },
-            { q: 'As per the new page, on which date was the bomb thrown on Lord Hardinge?', options: ['23 Dec 1912', '1 Nov 1914', '31 Dec 1906', '21 May 1909'], ans: 1 },
-            // ====== UPDATE 1.3: 23 NEW TRICKY QUESTIONS (Q141 to Q163) ======
-            { q: 'The American cartoon depicting the web of alliances in 1914 was titled?', options: ['"The Chain of Friendship"', '"The Web of War"', '"European Knot"', '"The Alliance Spider"'], ans: 0 },
-            { q: 'What did the French phrase "la grande peurre" refer to during the French Revolution?', options: ['Famine on the countryside', 'Great Terror in Paris', "King's bankruptcy", 'Enlightenment ideas'], ans: 0 },
-            { q: 'The Treaty of London (1839) was specifically related to the neutrality of which country?', options: ['Belgium', 'Switzerland', 'Netherlands', 'Luxembourg'], ans: 0 },
-            { q: 'Which country joined the Dual Alliance (Germany & Austria) in 1882 to form the Triple Alliance?', options: ['Italy', 'Ottoman Empire', 'Bulgaria', 'Romania'], ans: 0 },
-            { q: 'What did the Entente Cordiale (1904) leave famously undefended?', options: ['The northern coast of France', 'The eastern border of Britain', 'The Mediterranean Sea', 'The Rhine region'], ans: 0 },
-            { q: 'The "Pig War" was an economic rivalry between which two countries?', options: ['Austria-Hungary and Serbia', 'Germany and France', 'Britain and Russia', 'Italy and Ottoman Empire'], ans: 0 },
-            { q: 'Which commission was formed after WWI to investigate and assign blame for starting the war?', options: ['Commission on the Responsibility of the Authors of the War', 'Versailles Commission', 'League of Nations Inquiry', 'Hague Tribunal'], ans: 0 },
-            { q: "Germany's biggest diplomatic miscalculation before WWI was the belief that which country would remain neutral?", options: ['Britain', 'France', 'Russia', 'Italy'], ans: 0 },
-            { q: 'Which of these neutral countries later joined the Central Powers?', options: ['Ottoman Empire', 'Norway', 'Sweden', 'Switzerland'], ans: 0 },
-            { q: 'Which of these was NOT an effect of the French Revolution?', options: ['Establishment of an absolute monarchy', 'Beheading of the king', 'Configuration of church property', 'Growth of French military power'], ans: 0 },
-            { q: 'What was the German term for the "Phony War" period (1939-1940)?', options: ['Sitzkrieg', 'Blitzkrieg', 'Anschluss', 'Lebensraum'], ans: 0 },
-            { q: 'What was the German method of attack called during WWII?', options: ['Blitzkrieg', 'Sitzkrieg', 'Panzerkrieg', 'Luftwaffe'], ans: 0 },
-            { q: 'The immediate cause for King Louis XVI to assemble the Estates-General was?', options: ['State bankruptcy', 'American Revolution', 'Famine', 'Enlightenment ideas'], ans: 0 },
-            { q: 'How many years did the US work to build the strongest military after entering WWII?', options: ['4 years', '3 years', '5 years', '2 years'], ans: 0 },
-            { q: 'Gavrilo Princip was a member of which Serbian nationalist organization?', options: ['Black Hand', 'White Hand', 'Green Army', 'Red Fist'], ans: 0 },
-            { q: 'Which of these was a long-term cause of WWI, for which the acronym MAIN stands?', options: ['Militarism, Alliances, Imperialism, Nationalism', 'Monarchy, Aristocracy, Industry, Navy', 'Marxism, Anarchy, Irredentism, Neutrality', 'Mercantilism, Absolutism, Irredentism, Non-intervention'], ans: 0 },
-            { q: 'The "July Crisis" of 1914 was triggered by which event?', options: ['Assassination of Archduke Franz Ferdinand', 'German invasion of Belgium', 'Russian mobilization', 'The Pig War'], ans: 0 },
-            { q: 'Which of these countries was neutral at first but joined the Allies later?', options: ['Italy', 'Ottoman Empire', 'Bulgaria', 'Germany'], ans: 0 },
-            { q: 'As per the new page, the Ghadar Party was formed at San Francisco in which year (correct date)?', options: ['1 Nov 1914', '1 Nov 1913', '31 Dec 1914', '4 Aug 1914'], ans: 0 },
-            { q: 'Which effect of WWII helped the US get out of the Great Depression?', options: ['Economic development / Industrial complexes built', 'Nuclear development', 'Radar technology', 'Aircraft advancement'], ans: 0 },
-            { q: "In the Entente Cordiale (1904), Britain and France agreed to settle colonial disputes, but it famously did NOT require military support. What did it leave undefended?", options: ['Northern coast of France', 'Channel Islands', 'Belgium border', 'English Channel'], ans: 0 },
-            { q: "Which country's diplomatic cables with France were found to have been doctored after WWI?", options: ['Russia', 'Germany', 'Austria-Hungary', 'Italy'], ans: 0 },
-            { q: 'The main reason for the "Phony War" was that Britain and France believed what?', options: ['They could win using WWI tactics', 'Germany was too strong', 'Hitler would surrender', 'The US would join immediately'], ans: 0 }
+            // Chronological Order
+            { q: 'Which happened FIRST: Jallianwala (1919) or Dandi (1930)?', options: ['Jallianwala', 'Dandi', 'Both same year', 'None'], ans: 0 },
+            { q: 'Which happened FIRST: Non-Cooperation (1920) or Quit India (1942)?', options: ['Non-Cooperation', 'Quit India', 'Both same year', 'None'], ans: 0 },
+            { q: 'Which happened FIRST: Simon (1928) or CD (1930)?', options: ['Simon', 'CD', 'Both same year', 'None'], ans: 0 },
+            { q: 'Which happened FIRST: Gandhi-Irwin (1931) or Communal Award (1932)?', options: ['Gandhi-Irwin', 'Communal Award', 'Both same year', 'None'], ans: 0 },
+            { q: 'Which happened FIRST: Bose escapes (1941) or Quit India (1942)?', options: ['Bose escapes', 'Quit India', 'Both same year', 'None'], ans: 0 },
+            { q: 'Which happened LAST: Jallianwala (1919) or Quit India (1942)?', options: ['Jallianwala', 'Quit India', 'Both same year', 'None'], ans: 1 },
+            { q: 'Which happened LAST: Swarajist (1923) or INA (1942)?', options: ['Swarajist', 'INA', 'Both same year', 'None'], ans: 1 },
+            { q: 'Which happened LAST: Nehru Report (1928) or GOI Act (1935)?', options: ['Nehru Report', 'GOI Act 1935', 'Both same year', 'None'], ans: 1 },
+            { q: 'Which happened LAST: August Offer (1940) or Cabinet Mission (1946)?', options: ['August Offer', 'Cabinet Mission', 'Both same year', 'None'], ans: 1 },
+            { q: 'Arrange: Chauri Chaura (1922), Dandi (1930), Quit India (1942). MIDDLE one?', options: ['Chauri Chaura', 'Dandi March', 'Quit India', 'None'], ans: 1 },
+            { q: 'Arrange: Gandhiji returns (1915), Tilak HR (1916), Jallianwala (1919). FIRST?', options: ['Gandhiji returns', 'Tilak HR', 'Jallianwala', 'None'], ans: 0 },
+            { q: 'Correct sequence: Partition -> Jallianwala -> Dandi -> Quit India?', options: ['Yes (1905->1919->1930->1942)', 'No', 'Partially', 'None'], ans: 0 },
+            { q: 'BETWEEN 1925 and 1930?', options: ['Simon (1928)', 'Sarda (1929)', 'Both', 'None'], ans: 2 },
+            { q: 'BETWEEN 1930 and 1935?', options: ['Gandhi-Irwin (1931)', 'Communal Award (1932)', 'Both', 'None'], ans: 2 },
+            { q: 'FIRST: Minto-Morley (1909) or Montague-Chelmsford (1919)?', options: ['Minto-Morley', 'Montague-Chelmsford', 'Both', 'None'], ans: 0 },
+            { q: 'LAST: Cripps (1942) or Mountbatten Plan (1947)?', options: ['Cripps', 'Mountbatten Plan', 'Both', 'None'], ans: 1 },
+            // Update 1.2 (14 new)
+            { q: 'Treaty of London (Belgian neutrality)?', options: ['1839', '1879', '1894', '1904'], ans: 0 },
+            { q: 'Dual Alliance (Germany-Austria)?', options: ['1839', '1879', '1894', '1904'], ans: 1 },
+            { q: 'Franco-Russian Alliance?', options: ['1879', '1894', '1904', '1907'], ans: 1 },
+            { q: 'Entente Cordiale (Britain-France)?', options: ['1894', '1904', '1907', '1914'], ans: 1 },
+            { q: 'Anglo-Russian Entente (Triple Entente)?', options: ['1894', '1904', '1907', '1914'], ans: 2 },
+            { q: 'Immediate WWI crisis?', options: ['July Crisis', 'October Revolution', 'March Crisis', 'June Offensive'], ans: 0 },
+            { q: 'Who assassinated Archduke Franz Ferdinand?', options: ['Gavrilo Princip', 'Nedeljko Cabrinovic', 'Trifko Grabez', 'Muhamed Mehmedbasic'], ans: 0 },
+            { q: 'Central Powers at start of WWI?', options: ['Germany and Austria-Hungary', 'Britain and France', 'Germany and Italy', 'Russia and Serbia'], ans: 0 },
+            { q: 'Triple Entente countries?', options: ['Britain, France, Russia', 'Germany, Austria, Italy', 'Britain, France, Italy', 'Russia, Serbia, Germany'], ans: 0 },
+            { q: 'MAIN causes of WWI?', options: ['Militarism, Alliances, Imperialism, Nationalism', 'Monarchy, Aristocracy, Idealism, Nomads', 'Merchant, Army, Industry, Navy', 'Madness, Anger, Insanity, Negligence'], ans: 0 },
+            { q: 'American Revolution inspired which revolution?', options: ['French Revolution', 'Russian Revolution', 'Industrial Revolution', 'Green Revolution'], ans: 0 },
+            { q: 'Effect of French Revolution – church property?', options: ['Configuration of church property', 'Beheading of king', 'Annihilation of nobility', 'Installation of revolutionary regime'], ans: 0 },
+            { q: 'Delhi became capital on exact date?', options: ['23 Dec 1911', '23 Dec 1912', '1 Nov 1912', '1 Nov 1914'], ans: 1 },
+            { q: 'Bomb thrown on Lord Hardinge on?', options: ['23 Dec 1912', '1 Nov 1914', '31 Dec 1906', '21 May 1909'], ans: 1 },
+            // Update 1.3 (23 tricky)
+            { q: '1914 American cartoon about alliances?', options: ['"The Chain of Friendship"', '"The Web of War"', '"European Knot"', '"The Alliance Spider"'], ans: 0 },
+            { q: 'French phrase "la grande peurre" means?', options: ['Famine on countryside', 'Great Terror in Paris', "King's bankruptcy", 'Enlightenment ideas'], ans: 0 },
+            { q: 'Treaty of London (1839) neutrality of?', options: ['Belgium', 'Switzerland', 'Netherlands', 'Luxembourg'], ans: 0 },
+            { q: 'Which joined Dual Alliance in 1882 (Triple Alliance)?', options: ['Italy', 'Ottoman Empire', 'Bulgaria', 'Romania'], ans: 0 },
+            { q: 'Entente Cordiale (1904) left undefended?', options: ['Northern coast of France', 'Eastern border of Britain', 'Mediterranean Sea', 'Rhine region'], ans: 0 },
+            { q: '"Pig War" rivalry between?', options: ['Austria-Hungary and Serbia', 'Germany and France', 'Britain and Russia', 'Italy and Ottoman Empire'], ans: 0 },
+            { q: 'WWI blame commission?', options: ['Commission on Responsibility of Authors of the War', 'Versailles Commission', 'League of Nations Inquiry', 'Hague Tribunal'], ans: 0 },
+            { q: "Germany's belief that which country would remain neutral?", options: ['Britain', 'France', 'Russia', 'Italy'], ans: 0 },
+            { q: 'Neutral country that joined Central Powers?', options: ['Ottoman Empire', 'Norway', 'Sweden', 'Switzerland'], ans: 0 },
+            { q: 'NOT an effect of French Revolution?', options: ['Establishment of absolute monarchy', 'Beheading of king', 'Configuration of church property', 'Growth of French military power'], ans: 0 },
+            { q: 'German term for Phony War?', options: ['Sitzkrieg', 'Blitzkrieg', 'Anschluss', 'Lebensraum'], ans: 0 },
+            { q: 'German attack method in WWII?', options: ['Blitzkrieg', 'Sitzkrieg', 'Panzerkrieg', 'Luftwaffe'], ans: 0 },
+            { q: 'Immediate cause for Estates-General?', options: ['State bankruptcy', 'American Revolution', 'Famine', 'Enlightenment ideas'], ans: 0 },
+            { q: 'How many years for US to build strongest military?', options: ['4 years', '3 years', '5 years', '2 years'], ans: 0 },
+            { q: 'Gavrilo Princip was member of?', options: ['Black Hand', 'White Hand', 'Green Army', 'Red Fist'], ans: 0 },
+            { q: 'MAIN stands for?', options: ['Militarism, Alliances, Imperialism, Nationalism', 'Monarchy, Aristocracy, Industry, Navy', 'Marxism, Anarchy, Irredentism, Neutrality', 'Mercantilism, Absolutism, Irredentism, Non-intervention'], ans: 0 },
+            { q: 'July Crisis triggered by?', options: ['Assassination of Archduke', 'German invasion of Belgium', 'Russian mobilization', 'Pig War'], ans: 0 },
+            { q: 'Neutral at first, joined Allies later?', options: ['Italy', 'Ottoman Empire', 'Bulgaria', 'Germany'], ans: 0 },
+            { q: 'Ghadar Party formed at San Francisco in?', options: ['1 Nov 1914', '1 Nov 1913', '31 Dec 1914', '4 Aug 1914'], ans: 0 },
+            { q: 'Which effect helped US out of Great Depression?', options: ['Economic development / Industrial complexes built', 'Nuclear development', 'Radar technology', 'Aircraft advancement'], ans: 0 },
+            { q: 'Entente Cordiale left undefended?', options: ['Northern coast of France', 'Channel Islands', 'Belgium border', 'English Channel'], ans: 0 },
+            { q: "Which country's diplomatic cables with France were doctored?", options: ['Russia', 'Germany', 'Austria-Hungary', 'Italy'], ans: 0 },
+            { q: 'Main reason for Phony War?', options: ['They could win using WWI tactics', 'Germany was too strong', 'Hitler would surrender', 'The US would join immediately'], ans: 0 }
         ];
+        // ================================================================
 
-        // -------- ENGINE (No changes needed) --------
-        let currentIndex = 0;
-        let score = 0;
-        let isAnswered = false;
-
+        let shuffledQuestions = [], currentIndex = 0, score = 0, correctCount = 0, wrongCount = 0, isAnswered = false, timerInterval = null, timeLeft = 20;
+        const TOTAL_TIME = 20;
         const questionEl = document.getElementById('question');
         const optionsContainer = document.getElementById('options-container');
         const submitBtn = document.getElementById('submit-btn');
@@ -322,15 +417,28 @@
         const scoreCounter = document.getElementById('score-counter');
         const finalScore = document.getElementById('final-score');
         const totalQuestions = document.getElementById('total-questions');
+        const progressBar = document.getElementById('progress-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const correctCountEl = document.getElementById('correct-count');
+        const wrongCountEl = document.getElementById('wrong-count');
 
-        totalQuestions.textContent = questions.length;
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         function loadQuestion(index) {
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
             isAnswered = false;
-            const q = questions[index];
+            const q = shuffledQuestions[index];
+            if (!q) return;
             questionEl.textContent = `${index + 1}. ${q.q}`;
-            counterEl.textContent = `Question ${index + 1}/${questions.length}`;
-
+            counterEl.textContent = `Question ${index + 1}/${shuffledQuestions.length}`;
+            const progress = ((index + 1) / shuffledQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
             optionsContainer.innerHTML = '';
             q.options.forEach((opt, i) => {
                 const div = document.createElement('div');
@@ -343,11 +451,9 @@
                 const label = document.createElement('label');
                 label.htmlFor = `opt-${i}`;
                 label.textContent = opt;
-
                 div.appendChild(radio);
                 div.appendChild(label);
                 optionsContainer.appendChild(div);
-
                 div.addEventListener('click', function(e) {
                     if (isAnswered) return;
                     const radioInput = this.querySelector('input[type="radio"]');
@@ -356,7 +462,6 @@
                     this.classList.add('selected');
                 });
             });
-
             feedbackEl.className = 'feedback';
             feedbackEl.style.display = 'none';
             submitBtn.disabled = false;
@@ -365,69 +470,111 @@
             document.querySelectorAll('.option-item').forEach(el => {
                 el.classList.remove('correct', 'wrong', 'selected');
             });
-
-            scoreCounter.textContent = score;
-            finalScore.textContent = score;
+            timeLeft = TOTAL_TIME;
+            timerDisplay.textContent = `⏱️ ${timeLeft}s`;
+            timerDisplay.classList.remove('warning');
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `⏱️ ${timeLeft}s`;
+                if (timeLeft <= 5) timerDisplay.classList.add('warning');
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    if (!isAnswered) {
+                        const currentQ = shuffledQuestions[currentIndex];
+                        const allOptions = document.querySelectorAll('.option-item');
+                        allOptions.forEach((el, idx) => {
+                            if (idx === currentQ.ans) el.classList.add('correct');
+                            el.querySelector('input[type="radio"]').disabled = true;
+                        });
+                        const correctText = currentQ.options[currentQ.ans];
+                        feedbackEl.textContent = `⏰ Time's up! Correct answer: "${correctText}"`;
+                        feedbackEl.className = 'feedback show wrong';
+                        isAnswered = true;
+                        submitBtn.disabled = true;
+                        submitBtn.style.display = 'none';
+                        nextBtn.style.display = 'inline-block';
+                        wrongCount++;
+                        updateScoreDisplay();
+                    }
+                }
+            }, 1000);
+            updateScoreDisplay();
         }
 
         function checkAnswer() {
             if (isAnswered) return;
             const selected = document.querySelector('input[name="mcq"]:checked');
-            if (!selected) {
-                alert('Please select an option!');
-                return;
-            }
+            if (!selected) { alert('Please select an option!'); return; }
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
             const selectedValue = parseInt(selected.value);
-            const currentQ = questions[currentIndex];
+            const currentQ = shuffledQuestions[currentIndex];
             const isCorrect = (selectedValue === currentQ.ans);
-
             const allOptions = document.querySelectorAll('.option-item');
             allOptions.forEach((el, idx) => {
-                if (idx === currentQ.ans) {
-                    el.classList.add('correct');
-                } else if (idx === selectedValue && !isCorrect) {
-                    el.classList.add('wrong');
-                }
+                if (idx === currentQ.ans) el.classList.add('correct');
+                else if (idx === selectedValue && !isCorrect) el.classList.add('wrong');
                 el.querySelector('input[type="radio"]').disabled = true;
             });
-
-            if (isCorrect) {
-                score++;
-                scoreCounter.textContent = score;
-                finalScore.textContent = score;
-                feedbackEl.textContent = '✅ Correct Answer! Great job!';
-                feedbackEl.className = 'feedback show correct';
-            } else {
-                const correctText = currentQ.options[currentQ.ans];
-                feedbackEl.textContent = `❌ Incorrect! The correct answer was: "${correctText}"`;
-                feedbackEl.className = 'feedback show wrong';
-            }
-
+            if (isCorrect) { score++; correctCount++; feedbackEl.textContent = '✅ Correct! Great job!'; feedbackEl.className = 'feedback show correct'; }
+            else { wrongCount++; const correctText = currentQ.options[currentQ.ans]; feedbackEl.textContent = `❌ Incorrect. Correct answer: "${correctText}"`; feedbackEl.className = 'feedback show wrong'; }
             isAnswered = true;
             submitBtn.disabled = true;
             submitBtn.style.display = 'none';
             nextBtn.style.display = 'inline-block';
+            updateScoreDisplay();
         }
 
         function nextQuestion() {
-            if (currentIndex < questions.length - 1) {
+            if (currentIndex < shuffledQuestions.length - 1) {
                 currentIndex++;
                 loadQuestion(currentIndex);
             } else {
-                questionEl.textContent = '🎉 Congratulations! You have completed all 163 questions!';
+                clearInterval(timerInterval);
+                questionEl.textContent = '🎉 Quiz Complete! Amazing work!';
                 optionsContainer.innerHTML = '';
                 feedbackEl.style.display = 'none';
                 submitBtn.style.display = 'none';
                 nextBtn.style.display = 'none';
-                document.querySelector('.status-bar').innerHTML = `<span>✅ Quiz Complete!</span><span>Score: ${score}/${questions.length}</span>`;
-                finalScore.textContent = score;
+                document.querySelector('.status-bar').innerHTML = `<span>✅ Done!</span><span>Score: ${score}/${shuffledQuestions.length}</span>`;
+                progressBar.style.width = '100%';
+                timerDisplay.textContent = '🏁';
+                updateScoreDisplay();
             }
         }
 
+        function updateScoreDisplay() {
+            scoreCounter.textContent = score;
+            finalScore.textContent = score;
+            totalQuestions.textContent = shuffledQuestions.length;
+            correctCountEl.textContent = correctCount;
+            wrongCountEl.textContent = wrongCount;
+        }
+
+        const darkToggle = document.getElementById('darkModeToggle');
+        darkToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            darkToggle.textContent = '☀️';
+        }
+
+        function initQuiz() {
+            if (questions.length === 0) {
+                document.getElementById('question').textContent = '⚠️ Error: Questions not found!';
+                return;
+            }
+            shuffledQuestions = shuffleArray([...questions]);
+            totalQuestions.textContent = shuffledQuestions.length;
+            currentIndex = 0; score = 0; correctCount = 0; wrongCount = 0;
+            loadQuestion(0);
+        }
         submitBtn.addEventListener('click', checkAnswer);
         nextBtn.addEventListener('click', nextQuestion);
-
-        loadQuestion(0);
+        initQuiz();
     </script>
 </body>
 </html>
